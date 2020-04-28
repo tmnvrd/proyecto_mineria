@@ -1,0 +1,70 @@
+
+-- Crear rama nueva --
+
+git checkout -b nombre_rama_nueva
+
+( y luego subir la rama nueva al repo)
+
+git add *
+git commit -m "mensaje"
+git push origin nombre_rama_nueva
+
+-- Cambiarme de rama local --
+
+git checkout nombre_rama_local
+
+-- Hay una rama nueva en el repo pero no en local( mi pc), como la traigo? --
+
+git pull
+(esto trae a local la rama rama_nueva)
+git checkout rama_nueva
+git pull origin rama_nueva
+
+-- Hay cambios en la rama rama1 y quiero traerlos sin perder mis cambios locales --
+
+git add *
+git commit -m "mesaje"
+
+(subo mis cambios pero no los pusheo, esto hace que queden "guardados" en local)
+
+git pull origin rama1
+
+(arreglar posibles conflictos en mi repositorio)
+
+
+-- estoy en la rama A y quiero traer los cambios de la rama B
+
+(asegurarse de que todos mis cambios estén comitiados en A)
+git add *
+git commit -m "mensaje"
+git merge B 
+(esto trae los cambios de la rama B)
+arreglar posibles conflictos
+
+-- quiero subir los cambios de mi rama A
+
+git add *
+git commit -m "mensaje"
+git push origin A
+
+-- subir a dev
+git status //avisa los cambios
+git add*
+git status
+git commit -m "mensaje"
+git pull
+git status
+git push
+
+-- traer los cambios de dev a master
+git checkout master
+git status
+git pull
+git status
+git merge dev
+git status
+git push
+
+
+
+git config credential.helper 'cache --timeout=3600'
