@@ -1,3 +1,7 @@
+--- Guardar en cache las credenciales por una hora----
+
+git config credential.helper 'cache --timeout=3600'
+
 
 -- Crear rama nueva --
 
@@ -9,9 +13,11 @@ git add *
 git commit -m "mensaje"
 git push origin nombre_rama_nueva
 
+
 -- Cambiarme de rama local --
 
 git checkout nombre_rama_local
+
 
 -- Hay una rama nueva en el repo pero no en local( mi pc), como la traigo? --
 
@@ -19,6 +25,7 @@ git pull
 (esto trae a local la rama rama_nueva)
 git checkout rama_nueva
 git pull origin rama_nueva
+
 
 -- Hay cambios en la rama rama1 y quiero traerlos sin perder mis cambios locales --
 
@@ -41,20 +48,23 @@ git merge B
 (esto trae los cambios de la rama B)
 arreglar posibles conflictos
 
+
 -- quiero subir los cambios de mi rama A
 
 git add *
 git commit -m "mensaje"
 git push origin A
 
+
 -- subir a dev
 git status //avisa los cambios
-git add*
+git add* // Agrega todos los archivos, para archivo en particula usar add archivo.tipo
 git status
 git commit -m "mensaje"
 git pull
 git status
 git push
+
 
 -- traer los cambios de dev a master
 git checkout master
