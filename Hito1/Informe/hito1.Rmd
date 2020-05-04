@@ -1,0 +1,112 @@
+
+---
+title: "Hito1"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
++ Tamara Novoa
++ Francisca Grandón
++ Carolina Salgado
++ Cristofer Benavides
++ Néstor Álvarez
+
+## Introducción
+
+COVID-19 o también conocido por su nombre común corona virus. Fue llamado pandemia por la OMS (Organización mundial de la salud) el pasado 11 de Marzo por el director de ésta organización, Tedros Adhanom, argumentando, en parte, su rápida expansión.
+
+Las consecuencias de la propagación de éste virus han sido catastróficas para la economía mundial, pues las numerosas cuarentenas y cierres de fronteras has significado una paralización cercana a total, de la economía mundial. Ha puesto al descubierto las capacidades de los distintos gobiernos del mundo para manejar complejas situaciones con efectos ramificados y no sólo eso, su expansión a causado miles de muertes en el mundo y ha colapsado sistemas de salud hasta en países como Estados unidos.
+
+El virus comenzó el China y desde ahí se fue expandiendo a Europa para finalmente llegar a América a finales del primer trimestre del año. Sin embargo, en todo éste recorriedo que ha sido su expansión, ha tenido consecuencias muy diferentes para cada país al que ha llegado. Luego de casi tres meses de lucha, China fue capaz de controlarlo, aplanando su curva de contagios, Corea también ha sido capaz de controlarlo, pero países como Italia, España y Estados Unidos, son ejemplos de lugares en los que se ha salido, por completo, de control.
+
+Eso es todo lo que nos muestran los medios masivos de comunicación: caos, descontrol, miles de muertes en todo el mundo, pero ¿Cuál es la verdadera estadística que hay detrás? ¿Cuáles son los verdaderos números? ¿Por qué hay diferencias estadísticas abismales en los medidores de la enermedad? Poniendo como ejemplo, países de los más estudiados, como Corea del sur, Islandia y Alemania dicen que la tasa de mortalidad del virus se sitúa entre  0.1 % y  0.4 %, lo cual es hasta veinte veces menos que lo publicado por la OMS.
+
+Entonces, en el presente trabajo se busca corroborar ciertas estadísticas y cifras asociadas al virus, analizar si es que efectivamente hay diferencias entre países y ver si es que estas diferencias se traducen en patrones que se correlacionen o expliquen, en cierta forma, la expansión del virus.
+
+## Aborde inicial
+
+Como se anticipaba, los problemas en los que se enfoca este trabajo se dirigen, por una parte, a determinar si efectivamente la información que se recibe por los distintos medios de comunicación masiva, coincide con lo que se puede obtener a partir del trabajo directo con los datos, los cuales recogen registros de contagiados, fallecidos y recuperados a nivel mundial. Lo cual, en cierta medida, ya se avanzó con el pre-procesamiento del set de datos que se verá a continuación.
+
+Por otra parte, otro eje del proyecto se centra en buscar similitudes y diferencias entre países, los cuales se puedan correlacionar a cómo evoluciona el COVID-19 en cada territorio. Factores a comparar que se orientan tanto en el comportamiento de sus respectivas curvas de contagios, mortalidad y recuperados, como en cuestiones que están fuera del contexto del virus, es decir, parámetros demográficos, sociales y económicos, como la densidad poblacional, la tasa de mortalidad, el PIB, entre otros. Bajo estos antecedentes, se realizará una búsqueda de patrones en el dataset, de manera que sea posible clasificar a los países de acuerdo a estas características, y así concluir respecto al futuro de los países que se enfrentan a esta pandemia.
+
+## Análisis exploratorio
+
+### Entendiendo los datos
+
+Se utilizó la base de datos más actualizada a la fecha, la que se encuentra en un <a href='https://github.com/CSSEGISandData/COVID-19'>respositorio de Github de la universidad de Hopkins</a> que se va actualizando diariamente con el número de nuevos casos en el mundo. 
+
+La base posee datos de contagiados, recuperados y muertos; además, posee las siguientes columnas: Provincia, País, Lat, Long y las Fechas desde el $22$ de Enero a la actualidad, pero como no es sensato ir actualizando y, por ende, cambiando los análisis observados, los gráficos de series de tiempo se realizaron con información hasta el $20$ de Abril. <br>
+Cabe destacar que esta base presentaba nula aparición de valores faltantes o $NaN$ lo cual facilitó el trabajo posterior. 
+
+Sin embargo, se consideró que solo trabajar con series de tiempo no era suficiente, de forma que mediante una serie de merges, se agregaron variables explicativas asociadas a los países tales como: ingreso percápita, densidad poblacional, el porcentaje de alfabetización, cantidad de población, tasa mortalidad y de natalidad. Todos estos valores fueron obtenidos en una base de <a href='https://www.kaggle.com/fernandol/countries-of-the-world'>Kaggle</a> con información del año 2017.
+
+## Visión gráfica de los datos
+
+Para comenzar el análisis visual, lo primero fue tener una comparación de los países según los casos confirmados. La idea era ver la forma de avance del virus. Sin embargo, ya que los países poseen cantidades de población tan dispares, como se observa en los gráficos de más abajo, fue imperiosa la normalización de sus casos según este parámetro. Para esto, se tomaron dos formas de normalización:
+
+1. La primera corresponde a normalizar los casos según su población, donde se consultaron manualmente la población de cada país y con esto se pasó a porcentaje la cantidad de casos confirmados (  %=100∗𝐶𝑎𝑠𝑜𝑠/𝑃𝑜𝑏𝑙𝑎𝑐𝑖ó𝑛 ). En este gráfico se observa que el caso más crítico corresponde España, pues tiene más contagiados respecto de su población total, superando el  4 %.
+
+2. La segunda forma corresponde a la visualización de los casos en escala logarítmica que es la escala que más se usa para mostrar los datos en los medios masivos de comunicación.
+
+Éste análisis exploratorio se centrará en los contagiados y muertos, estudiándose algunas relaciones interesantes con las variables explicativas así como las series de tiempo.
+
+Comenzado por los contagiados, dada su relevancia y puesto que es lo que más se muestra en los medios masivos, se comenzará con las series de tiempo. Ahora, dado que ver las series de tiempo de todos los  170  países en la base no es muy interpretable a primera vista, se hizo una selección de los  10  países con más contagios obteniéndose las figuras 1 y 2 respectivamente.
+
+
+
+
+
+
+
+
+
+
+
+Curiosamente, sin normalizar, los top 10 países de contagios vienen dados por los que son los más controversiales en el momento en los noticiarios y diarios: España e Italia, seguidos por US y Francia. Sin embargo, al normalizar por la población, estos cambian y se ve que a la cabeza de los contagios está un micro estado llamado San Marino, seguido por Andorra y Luxemburgo, siendo éste último alcanzado por Qatar al final. Entonces, se tene la primera evidencia de que la estadística mostrada en la televisión no es del todo acertada, al no considerar este factor en la medida de cuán afectado puede estar un país.
+
+
+
+Ahora, respecto de las curvas de crecimiento de los datos normalizados, que vendría a ser la mejor representación de los contagios en la realidad de cada país, se ve que todos han comenzado a mostrar tendencias de aplanamiento de la curva menos San Marino y Qatar, las cuales continúan aumentando. Mientras que las curvas que se observan más planas, fueron las de Islandia, Italia y Suiza, lo cual lleva a que estos tres países están siendo capaces de controlar el avance del virus.
+
+Luego, se graficaron diversas variables representativas de los paises tales como densidad poblacional, GDP, alfabetización y población, todas estas variables representadas v/s la cantidad de contagios normalizados, destacando los países que presentaban la mayor cantidad de contagios. Donde también se muestra la posición de Chile, para compararlo con el resto del mundo.
+
+Como se observa de la figura 3, los países que presentan un bajo GDP, en su mayoría, no se han visto tan afectados por el virus, esto bien podría deberse a que en una primera etapa del virus las personas de estos países viajaban menos al extranjero trayendo a menos personas infectadas. Del mismo modo, países de bajo GDP no están testeando correctamente a las personas por lo que la cantidad de contagiados registrada es menor a la real. Por otro lado, países con alto GDP prestan gran diversidad con respecto a la cantidad de contagiados, pudiendo deberse tanto a la distribución del GDP en la población como al tipo de gobierno o politicas que rigen al país.
+
+
+
+En la figura 4 se muestra la densidad poblacional medida en persona por milla cuadrada contra la cantidad de contagiados normalizada. Se aprecia, contrario al sentido común, que mientras más denso es el país, menos cantidad de contagiados presenta, pudiendo deberse esto a que en países menos densos el control de la población es bastante más complicado. También cabe la posibilidad que países medianamente desarrollados tengan una mayor capacidad de testeo por lo que registran mayor cantidad de contagiados.
+
+
+
+
+En cuanto a la cifra de muertes, número que representa la gravedad que ha tenido la pandemia en cada país, se visualizan las curvas correspondientes a las diez localidades que han presentado una mayor cantidad de fallecidos hasta el pasado 20 de abril. Lo cual se muestra en la figura 5. Donde se puede ver que Bélgica, España e Italia encabezan a los demás países. Y se observa que la curva de Bélgica ha ascendido considerablemente en las últimas semanas, superando a todo el resto del mundo, efecto que lo ha llevado a ser el foco de atención en los últimos días.
+
+
+
+Ahora, se observa qué es lo que pasa con el índice de mortalidad si los datos de cada país se normalizan en función del número de habitantes de cada cual. En ese sentido, la figura 6 enseña las curvas de las diez localidades que alcanzan los valores más altos de muertes en razón de su población. Donde, San Marino vuelve a aparecer como el estado más afectado, siguiéndole Bélgica, España y el resto de los países, aunque con una diferencia considerablemente menor.
+
+
+
+De manera análoga a los casos confirmados, se graficaron los casos de muertos para cada país con respecto al GDP. Esto se muestra en la figura 7. Se observa que el comportamiento es similar al obtenido para los casos contagiados, donde nuevamente los países de bajo GDP no resultan tan afectados como los que poseen un alto valor en este índice. El parentesco entre los gráficos 3 y 7 se da por la correlación entre cantidad de contagiados y muertos.
+
+
+
+Con respecto a la relación entre casos de muertos y densidad población, ilustrada en figura 8, si bien los países más afectados son generalmente de baja densidad esta información no es concluyente, esto pues existe una cantidad considerable de naciones que con una densidad igual o menor no tienen los mismos casos de muertos. Una razón de este fenómeno es que no todos los países han sido afectados durante la misma cantidad de días y por lo tanto no hay suficientes datos para realizar la comparación.
+
+
+
+## Roles
+
+* Tamara Novoa: Confección gráficos, análisis exploratorio, presentar.
+* Francisca Grandón: Confección presentación, análisis de gráficos de series de tiempo para contagiados, introducción informe, presentar.
+* Carolina Salgado: Problemática del informe, análisis de gráficos de series de tiempo para fallecidos, presentar.
+* Cristofer Benavides: Confección de gráficos, análisis explotatorio, presentar.
+* Néstor Álvarez: Confección de gráficos, análisis explotatorio, presentar.
+
+
+Introdución a la Minería de Datos CC5206
+
