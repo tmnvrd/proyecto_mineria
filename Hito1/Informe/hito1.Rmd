@@ -139,3 +139,4 @@ Con respecto a la relación entre casos de muertos y densidad población, ilustr
 
 Introdución a la Minería de Datos CC5206
 
+Base de datos y procesamiento en el siguiente <a href='https://github.com/tmnvrd/proyecto_mineria/tree/dev'>enlace</a>.
